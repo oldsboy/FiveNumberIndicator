@@ -52,6 +52,7 @@ public class FiveNumberIndicator extends LinearLayout {
     private int lastPageIndex = -1;
     private int itemSize = px2dp(24);
     private int max = -1;
+    private long duration = 600;
 
     private OnIndicatorSelectListener onIndicatorSelectListener;
 
@@ -75,7 +76,7 @@ public class FiveNumberIndicator extends LinearLayout {
             tv4.setTextSize(TypedValue.COMPLEX_UNIT_SP, spSize);
             tv5.setTextSize(TypedValue.COMPLEX_UNIT_SP, spSize);
         }else {
-            int textSize = (int) (itemSize * (2f/3f));
+            int textSize = (int) (itemSize * (3f/5f));
 
             tv1.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             tv2.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
@@ -140,24 +141,6 @@ public class FiveNumberIndicator extends LinearLayout {
         }
         index += 1;     //  让index为1开头的页数
 
-        final int onePageDistance = px2dp(2*3) + itemSize;
-        TranslateAnimation translateAnimation = null;
-        if (lastPageIndex > index){          //  整体向右移动
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, -onePageDistance, Animation.ABSOLUTE, 0
-                    , Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0);
-        }else if (lastPageIndex < index){    //  整体向左移动
-            translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, onePageDistance, Animation.ABSOLUTE, 0
-                    , Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0);
-        }
-        if (translateAnimation != null) {
-            translateAnimation.setDuration(600);
-            translateAnimation.setRepeatCount(0);
-            translateAnimation.setRepeatMode(Animation.REVERSE);
-            translateAnimation.setFillAfter(false);
-            containerItem.startAnimation(translateAnimation);
-        }
-        lastPageIndex = index;
-
         int endNumber = 0;
         int startNumber = 0;
         if ((index+1) < (max+1)){   //  当前选择的item还能有1个末尾
@@ -220,6 +203,26 @@ public class FiveNumberIndicator extends LinearLayout {
             setViewShowHide(GONE, imgLast);
         }else {
             setViewShowHide(VISIBLE, imgLast);
+        }
+
+        if ((startNumber + 1 + endNumber) == 5){
+            final int onePageDistance = px2dp(2*3) + itemSize;
+            TranslateAnimation translateAnimation = null;
+            if (lastPageIndex > index){          //  整体向右移动
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, -onePageDistance, Animation.ABSOLUTE, 0
+                        , Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0);
+            }else if (lastPageIndex < index){    //  整体向左移动
+                translateAnimation = new TranslateAnimation(Animation.ABSOLUTE, onePageDistance, Animation.ABSOLUTE, 0
+                        , Animation.ABSOLUTE, 0, Animation.ABSOLUTE, 0);
+            }
+            if (translateAnimation != null) {
+                translateAnimation.setDuration(duration);
+                translateAnimation.setRepeatCount(0);
+                translateAnimation.setRepeatMode(Animation.REVERSE);
+                translateAnimation.setFillAfter(false);
+                containerItem.startAnimation(translateAnimation);
+            }
+            lastPageIndex = index;
         }
     }
 
@@ -325,7 +328,7 @@ public class FiveNumberIndicator extends LinearLayout {
         tv5 = (TextView) root.findViewById(R.id.tv5);
         containerItem = (LinearLayout) root.findViewById(R.id.container_item);
 
-        OnClickListener onClickListener = new OnClickListener() {
+        View.OnClickListener onClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -371,8 +374,8 @@ public class FiveNumberIndicator extends LinearLayout {
     @IntDef({VISIBLE, INVISIBLE, GONE})
     @Retention(RetentionPolicy.SOURCE)
     private @interface Visibility {}
-    private void setViewShowHide(@Visibility int visibility, View... views){
-        for (View view : views) {
+    private void setViewShowHide(@Visibility final int visibility, View... views){
+        for (final View view : views) {
             if (view.getVisibility() != visibility) {
                 view.setVisibility(visibility);
             }
