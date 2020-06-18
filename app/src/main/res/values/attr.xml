@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FiveNumberIndicator">
+        <attr name="item_size" format="dimension" />
+        <attr name="item_select" format="reference|color" />
+        <attr name="item_unselect" format="reference|color" />
+    </declare-styleable>
+</resources>

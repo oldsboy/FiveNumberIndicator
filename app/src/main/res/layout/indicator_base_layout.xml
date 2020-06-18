@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:background="@android:color/transparent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_toRightOf="@id/img_first"
+        android:id="@+id/container_item"
+        android:orientation="horizontal"
+        android:animateLayoutChanges="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv1"
+            style="@style/unselect_number_indicator_textview_item"/>
+        <TextView
+            android:id="@+id/tv2"
+            style="@style/unselect_number_indicator_textview_item"/>
+        <TextView
+            android:id="@+id/tv3"
+            style="@style/unselect_number_indicator_textview_item"/>
+        <TextView
+            android:id="@+id/tv4"
+            style="@style/unselect_number_indicator_textview_item"/>
+        <TextView
+            android:id="@+id/tv5"
+            style="@style/unselect_number_indicator_textview_item"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/img_first"
+        android:src="@drawable/ic_first_page_black_24dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:layout_width="24dp"
+        android:layout_height="24dp" />
+    <ImageView
+        android:id="@+id/img_last"
+        android:layout_toEndOf="@id/container_item"
+        android:src="@drawable/ic_last_page_black_24dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:layout_width="24dp"
+        android:layout_height="24dp" />
+</RelativeLayout>
